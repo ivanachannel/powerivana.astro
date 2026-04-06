@@ -1,0 +1,247 @@
+---
+// src/layouts/BaseLayout.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title:       string;
+  description: string;
+  canonical?:  string;
+  ogImage?:    string;
+  ogType?:     string;
+  noIndex?:    boolean;
+  pubDate?:    Date;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage   = '/og-default.png',
+  ogType    = 'website',
+  noIndex   = false,
+  pubDate,
+} = Astro.props;
+
+const SITE     = 'https://power.ivanakao.com';
+const AUTHOR   = '江臻冠英語高嫚老師';
+const canonUrl = canonical ?? (SITE + Astro.url.pathname).replace(/\/$/, '') + '/';
+const fullTitle = title.includes('高嫚') || title.includes('江臻冠')
+  ? title
+  : `${title} | ${AUTHOR}`;
+---
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- ── Primary SEO ── -->
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="author"      content={AUTHOR} />
+  <link rel="canonical"    href={canonUrl} />
+  {noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:title"       content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url"         content={canonUrl} />
+  <meta property="og:type"        content={ogType} />
+  <meta property="og:image"       content={SITE + ogImage} />
+  <meta property="og:site_name"   content={AUTHOR} />
+  <meta property="og:locale"      content="zh_TW" />
+  {pubDate && (
+    <meta property="article:published_time" content={pubDate.toISOString()} />
+  )}
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image"       content={SITE + ogImage} />
+  <meta name="twitter:site"        content="@englishwithivanakao" />
+
+  <!-- ── Structured Data ── -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context":   "https://schema.org",
+    "@type":      "Organization",
+    "name":       AUTHOR,
+    "url":        SITE,
+    "logo":       SITE + "/favicon.svg",
+    "sameAs": [
+      "https://www.youtube.com/englishwithivanakao",
+      "https://www.instagram.com/englishwithivanakao",
+      "https://www.facebook.com/englishwithivanakao",
+    ],
+  })} />
+
+  <!-- ── Favicon ── -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- ── Google Fonts ── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- ── Tailwind CDN（開發用，production 可替換為 build step） ── -->
+  <script src="https://cdn.tailwindcss.com" is:inline></script>
+
+  <style is:global>
+    /* ═══════════════════════════════════════════
+       CSS 設計 Token
+    ═══════════════════════════════════════════ */
+    :root {
+      --brand-orange:     #C8692A;
+      --brand-orange-lt:  #E07A3A;
+      --brand-orange-dk:  #A85520;
+      --brand-cream:      #FAF7F2;
+      --brand-warm-white: #FDF9F4;
+      --brand-dark:       #2C2416;
+      --brand-gray:       #4A4035;
+      --brand-mid-gray:   #7A6E60;
+      --brand-light-gray: #B8AFA4;
+      --brand-section-dk: #3A2E22;
+      --brand-tan:        #E8DDD0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html  { scroll-behavior: smooth; }
+    body  {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: var(--brand-cream);
+      color: var(--brand-dark);
+      line-height: 1.7;
+    }
+    h1, h2, h3, h4 { font-family: 'Noto Serif TC', serif; }
+
+    /* ── Section helpers ── */
+    .section        { padding: 96px 32px; }
+    .section-inner  { max-width: 1100px; margin: 0 auto; }
+    .section-label  {
+      font-size: .76rem; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--brand-orange); margin-bottom: 14px;
+    }
+    .section-title  {
+      font-size: 2.1rem; font-weight: 700;
+      color: var(--brand-dark); line-height: 1.4; margin-bottom: 18px;
+    }
+    .section-sub    {
+      font-size: 1.04rem; color: var(--brand-mid-gray);
+      line-height: 1.85; max-width: 640px;
+    }
+    .divider        {
+      width: 48px; height: 3px;
+      background: var(--brand-orange); border-radius: 2px; margin-bottom: 24px;
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 32px; background: var(--brand-orange); color: #fff;
+      font-size: 1rem; font-weight: 600; border-radius: 8px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all .25s; font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: .03em;
+    }
+    .btn-primary:hover {
+      background: var(--brand-orange-dk);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(200,105,42,.3);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 13px 30px; background: transparent; color: var(--brand-dark);
+      font-size: 1rem; font-weight: 600; border-radius: 8px;
+      text-decoration: none; border: 1.5px solid rgba(44,36,22,.28);
+      cursor: pointer; transition: all .25s; font-family: 'Noto Sans TC', sans-serif;
+    }
+    .btn-secondary:hover {
+      border-color: var(--brand-orange); color: var(--brand-orange);
+      transform: translateY(-1px);
+    }
+
+    /* ── Fade-in animation ── */
+    .fade-in {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .12s; }
+    .delay-2 { transition-delay: .24s; }
+    .delay-3 { transition-delay: .36s; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px;
+      background: var(--brand-dark); color: #fff;
+      padding: 13px 22px; border-radius: 9px; font-size: .87rem;
+      z-index: 3000; opacity: 0; transform: translateY(14px);
+      transition: all .3s; pointer-events: none; max-width: 300px; line-height: 1.5;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .section       { padding: 64px 20px; }
+      .section-title { font-size: 1.75rem; }
+    }
+    @media (max-width: 480px) {
+      .section-title { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <Header />
+
+  <main id="main-content" tabindex="-1">
+    <slot />
+  </main>
+
+  <Footer />
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- ── Global Scripts ── -->
+  <script is:inline>
+    // Intersection Observer — fade-in
+    (() => {
+      const els = document.querySelectorAll('.fade-in');
+      if (!els.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: .08, rootMargin: '0px 0px -36px 0px' });
+      els.forEach(el => io.observe(el));
+    })();
+
+    // Toast helper
+    let _toastTimer = null;
+    window.showToast = function(msg, duration) {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(_toastTimer);
+      _toastTimer = setTimeout(() => t.classList.remove('show'), duration || 3600);
+    };
+
+    // Smooth scroll helper
+    window.smoothTo = function(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+  </script>
+</body>
+</html>

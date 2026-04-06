@@ -1,0 +1,114 @@
+---
+// src/components/ResourceSection.astro
+const RESOURCES = [
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+             <polyline points="14 2 14 8 20 8"/>
+             <line x1="16" y1="13" x2="8" y2="13"/>
+             <line x1="16" y1="17" x2="8" y2="17"/>
+           </svg>`,
+    title:    '免費英文攻略 PDF',
+    desc:     '高嫚老師獨家整理的成人英文補斷層攻略，幫助你在開始學習前先了解自己的英文斷層在哪裡。',
+    btnLabel: '立即領取',
+    href:     'https://reurl.cc/eWYeZj',
+  },
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+             <polygon points="23 7 16 12 23 17 23 7"/>
+             <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+           </svg>`,
+    title:    '免費英文培訓課程',
+    desc:     '高嫚老師免費培訓影音資源，從觀念到方法，幫助你用對的方式重新開始累積英文能力。',
+    btnLabel: '立即觀看',
+    href:     'https://www.ivanachannel.com',
+  },
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+             <rect x="3" y="11" width="18" height="11" rx="2"/>
+             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+           </svg>`,
+    title:    '高嫚AI免費教練',
+    desc:     '結合高嫚老師教學邏輯的AI英文教練，隨時可以練習、隨時可以提問，幫助你持續累積。',
+    btnLabel: '立即體驗',
+    href:     'https://ai.ivanakao.com',
+  },
+  {
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" aria-hidden="true">
+             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+             <circle cx="9" cy="7" r="4"/>
+             <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+           </svg>`,
+    title:    '免費英語力社群 SKOOL',
+    desc:     '加入高嫚免費英語力社群，與同樣在重新建立英文能力的夥伴一起前進，互相支持累積。',
+    btnLabel: '立即加入',
+    href:     'https://www.skool.com/englishpower-5696/about',
+  },
+];
+---
+<section id="resources" class="section" aria-labelledby="resources-heading">
+  <div class="section-inner">
+
+    <div class="fade-in">
+      <div class="section-label">免費英文資源</div>
+      <h2 class="section-title" id="resources-heading">先拿資源，先建立感覺</h2>
+      <div class="divider"></div>
+      <p class="section-sub">先拿資源，先建立感覺，再開始穩定累積英文能力。</p>
+    </div>
+
+    <div class="resources-grid">
+      {RESOURCES.map((r, i) => (
+        <div class={`resource-card fade-in delay-${i}`}>
+          <div class="resource-icon" set:html={r.icon} />
+          <h3 class="resource-title">{r.title}</h3>
+          <p class="resource-desc">{r.desc}</p>
+          <a
+            href={r.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="resource-btn"
+            aria-label={`${r.btnLabel} — ${r.title}`}
+          >
+            {r.btnLabel}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  #resources { background: var(--brand-cream); }
+  .resources-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-top: 52px; }
+
+  .resource-card {
+    background: #fff; border-radius: 13px; padding: 30px 24px;
+    box-shadow: 0 2px 18px rgba(44,36,22,.06); transition: all .26s;
+    display: flex; flex-direction: column;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 10px 36px rgba(44,36,22,.12); }
+
+  .resource-icon {
+    width: 50px; height: 50px; background: rgba(200,105,42,.1); border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--brand-orange); margin-bottom: 20px; flex-shrink: 0;
+  }
+  .resource-title { font-family: 'Noto Serif TC', serif; font-size: 1.04rem; font-weight: 700; color: var(--brand-dark); margin-bottom: 10px; }
+  .resource-desc  { font-size: .85rem; color: var(--brand-mid-gray); line-height: 1.78; flex: 1; margin-bottom: 22px; }
+  .resource-btn {
+    display: flex; align-items: center; justify-content: center;
+    padding: 11px 20px; background: var(--brand-orange); color: #fff;
+    font-size: .875rem; font-weight: 600; border-radius: 7px;
+    text-decoration: none; transition: all .22s; width: 100%;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  .resource-btn:hover { background: var(--brand-orange-dk); }
+
+  @media (max-width: 1024px) { .resources-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .resources-grid { grid-template-columns: 1fr; } }
+</style>
