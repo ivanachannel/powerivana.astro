@@ -1,0 +1,273 @@
+---
+// src/components/Footer.astro
+// ══════════════════════════════════════════════════════════════════════════════
+// 頁尾
+// 版權年份：JavaScript 動態取得
+// meta author：江臻冠英語高嫚老師
+// 高嫚商城 / 卓睛勝劵：僅放頁尾（不放頁首）
+// ══════════════════════════════════════════════════════════════════════════════
+
+const SOCIAL = [
+  {
+    label: 'SKOOL 社群',
+    href:  'https://www.skool.com/englishpower-5696/about',
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               width="20" height="20" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12l3 3 5-5"/>
+          </svg>`,
+    color: '#00A859',
+  },
+  {
+    label: 'LINE',
+    href:  'https://lin.ee/qi2H7zq',
+    svg: `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+            <path d="M19.952 10.357C19.952 6.29 15.857 3 10.86 3S1.768 6.29 1.768
+              10.357c0 3.663 3.25 6.728 7.639 7.309.297.064.702.196.804.45.092.231
+              .06.593.03.827l-.13.779c-.04.231-.183.904.793.493s5.271-3.104
+              7.191-5.314c1.327-1.455 1.857-2.932 1.857-4.544z"/>
+          </svg>`,
+    color: '#06C755',
+  },
+  {
+    label: 'YouTube',
+    href:  'https://www.youtube.com/englishwithivanakao',
+    svg: `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12
+              3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0
+              8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871
+              .505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0
+              2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545
+              15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>`,
+    color: '#FF0000',
+  },
+  {
+    label: 'Instagram',
+    href:  'https://www.instagram.com/englishwithivanakao',
+    svg: `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691
+              4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069
+              4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07
+              -3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058
+              -1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227
+              1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163
+              c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059
+              1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358
+              2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0
+              3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28
+              .073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354
+              -2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0
+              5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163
+              6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0
+              10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0
+              2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645
+              1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>`,
+    color: '#E1306C',
+  },
+  {
+    label: 'Facebook',
+    href:  'https://www.facebook.com/englishwithivanakao',
+    svg: `<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99
+              4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007
+              1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83
+              c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385
+              C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>`,
+    color: '#1877F2',
+  },
+];
+
+const FOOTER_COLS = [
+  {
+    title: '課程資源',
+    links: [
+      { label: 'LITE 英文體質重建', href: '/#course' },
+      { label: '免費英文培訓',       href: 'https://www.ivanachannel.com',            ext: true },
+      { label: '高嫚AI教練',          href: 'https://ai.ivanakao.com',                  ext: true },
+      { label: '免費資源下載',        href: 'https://www.ivanakao.com/blogs/pdf',       ext: true },
+    ],
+  },
+  {
+    title: '高嫚專欄',
+    links: [
+      { label: '全部文章',    href: '/blog/' },
+      { label: '高嫚世界觀', href: '/blog/' },
+      { label: '精神指引',   href: '/blog/' },
+      { label: '英文懶人包', href: '/blog/' },
+    ],
+  },
+  {
+    title: '關於我們',
+    links: [
+      { label: '高嫚故事', href: '/about/story/' },
+      { label: '媒體報導', href: '/about/media/' },
+      { label: '成果見證', href: '/testimonials/' },
+      { label: '聯繫高嫚', href: '/contact/' },
+    ],
+  },
+];
+---
+
+<footer role="contentinfo">
+  <div class="footer-inner">
+
+    <!-- Brand Column -->
+    <div class="footer-brand">
+      <h3 class="footer-brand-name">江臻冠英語<br>高嫚老師</h3>
+      <p class="footer-brand-desc">
+        高嫚老師獨家統整的成人英文補斷層系統，幫助離開英文多年的人，
+        重新建立可以吸收、記住、累積的英文能力結構。
+      </p>
+
+      <!-- Social Icons（5個，必須清晰可辨） -->
+      <div class="footer-socials" aria-label="社群媒體連結">
+        {SOCIAL.map(s => (
+          <a
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-icon"
+            aria-label={`前往高嫚 ${s.label}`}
+            style={`--icon-color: ${s.color};`}
+            set:html={s.svg}
+          />
+        ))}
+      </div>
+
+      <!-- 品牌生態系（僅頁尾） -->
+      <div class="footer-ecosystem">
+        <a
+          href="https://shop.ivanakao.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="eco-link"
+        >
+          高嫚商城
+        </a>
+        <a
+          href="https://www.wuraos.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="eco-link"
+        >
+          卓睛勝劵
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation Columns -->
+    {FOOTER_COLS.map(col => (
+      <div class="footer-col">
+        <h4 class="footer-col-title">{col.title}</h4>
+        {col.links.map(link => (
+          <a
+            href={link.href}
+            class="footer-col-link"
+            {...(link.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    ))}
+
+  </div>
+
+  <!-- Bottom bar — 年份由 JS 動態填入 -->
+  <div class="footer-bottom">
+    <span id="footer-copyright">
+      © <span id="footer-year"></span> 江臻冠英語高嫚老師 · All Rights Reserved
+    </span>
+    <span class="footer-domain">power.ivanakao.com</span>
+  </div>
+</footer>
+
+<!-- 動態年份：JavaScript 實作 -->
+<script is:inline>
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+</script>
+
+<style>
+  footer {
+    background: var(--brand-dark);
+    color: rgba(255,255,255,.5);
+    padding: 56px 32px 32px;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    padding-bottom: 44px; border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+
+  /* Brand */
+  .footer-brand-name {
+    font-family: 'Noto Serif TC', serif; font-size: 1.12rem; font-weight: 700;
+    color: #FDF9F4; margin-bottom: 12px; line-height: 1.55;
+  }
+  .footer-brand-desc {
+    font-size: .82rem; line-height: 1.85; max-width: 240px; margin-bottom: 22px;
+  }
+
+  /* Social icons */
+  .footer-socials { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .social-icon {
+    width: 40px; height: 40px; border-radius: 9px;
+    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.6); text-decoration: none;
+    transition: all .22s; flex-shrink: 0;
+  }
+  .social-icon:hover {
+    background: var(--icon-color, var(--brand-orange));
+    border-color: transparent; color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  }
+
+  /* Ecosystem links */
+  .footer-ecosystem { display: flex; gap: 10px; flex-wrap: wrap; }
+  .eco-link {
+    padding: 6px 15px; border-radius: 6px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    color: rgba(255,255,255,.52); font-size: .8rem; font-weight: 600;
+    text-decoration: none; transition: all .22s;
+  }
+  .eco-link:hover {
+    background: rgba(200,105,42,.22);
+    border-color: rgba(200,105,42,.35);
+    color: var(--brand-orange-lt);
+  }
+
+  /* Nav columns */
+  .footer-col-title {
+    font-size: .87rem; font-weight: 700; color: rgba(255,255,255,.8);
+    margin-bottom: 15px; letter-spacing: .05em;
+  }
+  .footer-col-link {
+    display: block; font-size: .82rem; color: rgba(255,255,255,.46);
+    text-decoration: none; margin-bottom: 9px; transition: color .2s;
+  }
+  .footer-col-link:hover { color: var(--brand-orange); }
+
+  /* Bottom bar */
+  .footer-bottom {
+    max-width: 1100px; margin: 26px auto 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .77rem; color: rgba(255,255,255,.26); flex-wrap: wrap; gap: 8px;
+  }
+  .footer-domain { font-family: monospace; letter-spacing: .04em; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    footer        { padding: 40px 20px 24px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+    .footer-bottom{ flex-direction: column; text-align: center; }
+  }
+</style>

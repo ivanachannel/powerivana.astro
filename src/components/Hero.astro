@@ -1,0 +1,177 @@
+---
+// src/components/Hero.astro
+// 保留原 HTML 視覺風格：暖色系、serif 標題、左文右卡片
+---
+<section id="hero" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+
+    <!-- Left: Headline -->
+    <div class="hero-left fade-in">
+      <div class="hero-eyebrow">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        高嫚老師獨家統整系統
+      </div>
+
+      <h1 class="hero-title" id="hero-heading">
+        補齊英文斷層，<br>
+        讓英文重新變成<br>
+        你<em>累積得起來</em>的能力
+      </h1>
+
+      <p class="hero-desc">
+        高嫚老師獨家統整，專為中年學習者設計的英文補斷層系統。<br>
+        幫助離開英文多年的人，重新建立可以吸收、記住、累積的英文能力結構。
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#course"
+           class="btn-primary"
+           onclick="smoothTo('course');return false;"
+           aria-label="查看 LITE 課程介紹">
+          查看課程介紹
+        </a>
+        <a href="https://www.ivanakao.com/blogs/pdf"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-secondary">
+          領取免費英文資源
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: Info Card -->
+    <div class="hero-right fade-in delay-2">
+      <div class="hero-card">
+        <div class="hero-badge" aria-label="最適合中年學習者">
+          <span>最適合<br>中年<br>學習者</span>
+        </div>
+
+        <div class="card-label">LITE 英文體質重建系統</div>
+        <div class="card-subtitle">四個核心模組，重新建立你的英文能力結構</div>
+
+        <div class="card-modules">
+          {[
+            { l: 'L', t: '邏輯發音對位' },
+            { l: 'I', t: '結構化單字記憶' },
+            { l: 'T', t: '戰略型筆記系統' },
+            { l: 'E', t: '自動進步機制' },
+          ].map(m => (
+            <div class="module-row">
+              <div class="module-letter" aria-hidden="true">{m.l}</div>
+              <span class="module-text">{m.t}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="card-stats" aria-label="學員統計">
+          <div class="stat">
+            <span class="stat-num">98%</span>
+            <div class="stat-label">學員重新找回累積感</div>
+          </div>
+          <div class="stat">
+            <span class="stat-num">35+</span>
+            <div class="stat-label">主要服務年齡層</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #hero {
+    padding: 140px 32px 100px;
+    background: linear-gradient(148deg, #FDF9F4 0%, #F5EDE0 50%, #FAF4EC 100%);
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,105,42,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+  }
+
+  /* Eyebrow */
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; background: rgba(200,105,42,.1); border-radius: 20px;
+    font-size: .8rem; font-weight: 600; color: var(--brand-orange);
+    letter-spacing: .06em; margin-bottom: 28px;
+  }
+
+  /* Title */
+  .hero-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 2.8rem; font-weight: 700; color: var(--brand-dark);
+    line-height: 1.38; margin-bottom: 26px;
+  }
+  .hero-title em { font-style: normal; color: var(--brand-orange); }
+
+  /* Desc */
+  .hero-desc {
+    font-size: 1.04rem; color: var(--brand-mid-gray); line-height: 1.9;
+    margin-bottom: 40px; max-width: 520px;
+  }
+
+  /* CTAs */
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* Card */
+  .hero-card {
+    background: #fff; border-radius: 18px; padding: 38px;
+    box-shadow: 0 8px 44px rgba(44,36,22,.1); position: relative;
+  }
+  .hero-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--brand-orange), #E07A3A);
+    border-radius: 18px 18px 0 0;
+  }
+  .hero-badge {
+    position: absolute; top: -22px; right: -22px;
+    width: 88px; height: 88px; border-radius: 50%;
+    background: var(--brand-orange);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 18px rgba(200,105,42,.42);
+  }
+  .hero-badge span {
+    font-size: .68rem; color: #fff; font-weight: 700;
+    text-align: center; line-height: 1.35; padding: 0 8px;
+  }
+  .card-label    { font-size: .78rem; color: var(--brand-mid-gray); margin-bottom: 7px; font-weight: 600; letter-spacing: .08em; }
+  .card-subtitle { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 700; color: var(--brand-dark); line-height: 1.5; margin-bottom: 22px; }
+
+  .card-modules  { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .module-row    { display: flex; align-items: center; gap: 13px; padding: 11px 14px; background: var(--brand-cream); border-radius: 9px; }
+  .module-letter {
+    width: 34px; height: 34px; background: rgba(200,105,42,.14); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif TC', serif; font-weight: 700; color: var(--brand-orange); font-size: .98rem; flex-shrink: 0;
+  }
+  .module-text { font-size: .86rem; color: var(--brand-gray); font-weight: 500; }
+
+  .card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat       { text-align: center; padding: 16px; background: var(--brand-cream); border-radius: 10px; }
+  .stat-num   { font-family: 'Noto Serif TC', serif; font-size: 1.9rem; font-weight: 700; color: var(--brand-orange); display: block; }
+  .stat-label { font-size: .8rem; color: var(--brand-mid-gray); margin-top: 4px; line-height: 1.4; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 52px; }
+    .hero-title { font-size: 2.2rem; }
+  }
+  @media (max-width: 768px) {
+    #hero { padding: 120px 20px 64px; }
+    .hero-title { font-size: 1.9rem; }
+    .hero-ctas  { flex-direction: column; }
+    .hero-ctas .btn-primary,
+    .hero-ctas .btn-secondary { width: 100%; justify-content: center; }
+  }
+</style>

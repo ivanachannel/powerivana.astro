@@ -1,0 +1,448 @@
+---
+// src/components/Header.astro
+// ══════════════════════════════════════════════════════════════════════════════
+// 導覽列（Navbar）
+// 主選單順序：免費禮物下載 / 課程介紹 / 成果見證 / 高嫚專欄 / 關於高嫚
+// 右側：學員登入 dropdown
+// 左上品牌名稱：江臻冠英語高嫚老師（即首頁連結，不顯示「首頁」選單項）
+// ══════════════════════════════════════════════════════════════════════════════
+
+const NAV = [
+  {
+    id:       'gift',
+    label:    '免費禮物下載',
+    href:     'https://www.ivanakao.com/blogs/pdf',
+    external: true,
+    dropdown: [
+      {
+        label:    '免費英文培訓課程',
+        href:     'https://www.ivanachannel.com',
+        external: true,
+      },
+      {
+        label:    '如何不恐懼說英文（免費攻略下載）',
+        href:     'https://reurl.cc/eWYeZj',
+        external: true,
+      },
+      {
+        label:    '免費英文資源社群 SKOOL',
+        href:     'https://www.skool.com/englishpower-5696/about',
+        external: true,
+      },
+    ],
+  },
+  {
+    id:    'course',
+    label: '課程介紹',
+    href:  '/#course',
+    dropdown: [
+      { label: 'LITE 課程介紹', href: '/#course' },
+      {
+        label:    '高嫚智本商城',
+        href:     'https://shop.ivanakao.com',
+        external: true,
+      },
+    ],
+  },
+  {
+    id:    'testimonials',
+    label: '成果見證',
+    href:  '/testimonials/',
+  },
+  {
+    id:    'blog',
+    label: '高嫚專欄',
+    href:  '/blog/',
+  },
+  {
+    id:    'about',
+    label: '關於高嫚',
+    href:  '/about/story/',
+    dropdown: [
+      { label: '媒體報導', href: '/about/media/' },
+      { label: '高嫚故事', href: '/about/story/' },
+      { label: '聯繫高嫚', href: '/contact/' },
+    ],
+  },
+];
+
+const LOGIN_ITEMS = [
+  {
+    label: '高嫚課程登入',
+    href:  'https://sso.teachable.com/secure/1078310/identity/login/otp',
+  },
+  {
+    label: '高嫚AI教練登入',
+    href:  'https://ai.ivanakao.com',
+  },
+  {
+    label: '高嫚社群SKOOL登入',
+    href:  'https://www.skool.com/englishpower-5696/about',
+  },
+];
+---
+
+<!-- ── Desktop Navbar ── -->
+<nav id="navbar" role="navigation" aria-label="主選單">
+  <div class="nav-inner">
+
+    <!-- 左上：品牌名稱（即首頁連結） -->
+    <a href="/" class="brand-name" aria-label="回到首頁 — 江臻冠英語高嫚老師">
+      江臻冠英語高嫚老師
+    </a>
+
+    <!-- 主選單 -->
+    <ul class="nav-menu" role="menubar" aria-label="主選單">
+      {NAV.map(item => (
+        <li class="nav-item" role="none">
+          {item.dropdown ? (
+            <>
+              <button
+                class="nav-link"
+                role="menuitem"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-nav-btn
+              >
+                {item.label}
+                <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <div class="dropdown" role="menu">
+                {item.dropdown.map(sub => (
+                  <a
+                    href={sub.href}
+                    role="menuitem"
+                    class="dropdown-item"
+                    {...(sub.external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                  >
+                    {sub.label}
+                    {sub.external && (
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                           stroke="currentColor" stroke-width="2" aria-hidden="true"
+                           style="opacity:.5; flex-shrink:0;">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </>
+          ) : (
+            <a
+              href={item.href}
+              class="nav-link"
+              role="menuitem"
+              {...(item.external
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
+            >
+              {item.label}
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+
+    <!-- 右側：學員登入 + Hamburger -->
+    <div class="nav-right">
+      <!-- 學員登入 dropdown -->
+      <div class="nav-item login-wrap">
+        <button
+          class="btn-login"
+          aria-haspopup="true"
+          aria-expanded="false"
+          data-nav-btn
+        >
+          學員登入
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="dropdown login-dropdown" role="menu">
+          {LOGIN_ITEMS.map(item => (
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              role="menuitem"
+              class="dropdown-item"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Hamburger -->
+      <button
+        class="hamburger"
+        id="hamburgerBtn"
+        aria-label="開關行動選單"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ── Mobile Menu ── -->
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="行動選單" aria-hidden="true">
+  <!-- 免費禮物下載 -->
+  <a href="https://www.ivanakao.com/blogs/pdf"
+     target="_blank" rel="noopener noreferrer"
+     class="mobile-link mobile-link--parent">免費禮物下載</a>
+  <div class="mobile-submenu">
+    <a href="https://www.ivanachannel.com"
+       target="_blank" rel="noopener noreferrer" class="mobile-link">免費英文培訓課程</a>
+    <a href="https://reurl.cc/eWYeZj"
+       target="_blank" rel="noopener noreferrer" class="mobile-link">如何不恐懼說英文（免費攻略）</a>
+    <a href="https://www.skool.com/englishpower-5696/about"
+       target="_blank" rel="noopener noreferrer" class="mobile-link">免費英文資源社群 SKOOL</a>
+  </div>
+
+  <!-- 課程介紹 -->
+  <span class="mobile-link mobile-link--parent">課程介紹</span>
+  <div class="mobile-submenu">
+    <a href="/#course" class="mobile-link">LITE 課程介紹</a>
+    <a href="https://shop.ivanakao.com"
+       target="_blank" rel="noopener noreferrer" class="mobile-link">高嫚智本商城</a>
+  </div>
+
+  <a href="/testimonials/" class="mobile-link">成果見證</a>
+  <a href="/blog/"         class="mobile-link">高嫚專欄</a>
+
+  <!-- 關於高嫚 -->
+  <span class="mobile-link mobile-link--parent">關於高嫚</span>
+  <div class="mobile-submenu">
+    <a href="/about/media/" class="mobile-link">媒體報導</a>
+    <a href="/about/story/" class="mobile-link">高嫚故事</a>
+    <a href="/contact/"     class="mobile-link">聯繫高嫚</a>
+  </div>
+
+  <div class="mobile-divider"></div>
+
+  <!-- 學員登入 -->
+  <span class="mobile-link mobile-link--section">學員登入</span>
+  <div class="mobile-submenu">
+    {LOGIN_ITEMS.map(item => (
+      <a href={item.href} target="_blank" rel="noopener noreferrer" class="mobile-link">
+        {item.label}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* ═══════════════════════════════════════
+     Navbar
+  ═══════════════════════════════════════ */
+  #navbar {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    background: rgba(253,249,244,.97);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(200,185,168,.28);
+    transition: box-shadow .3s ease;
+  }
+  #navbar.scrolled { box-shadow: 0 2px 24px rgba(44,36,22,.09); }
+
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 32px;
+    height: 68px; display: flex; align-items: center; justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* Brand */
+  .brand-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.08rem; font-weight: 700;
+    color: var(--brand-dark); letter-spacing: .05em;
+    text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    transition: color .2s;
+  }
+  .brand-name:hover { color: var(--brand-orange); }
+
+  /* Menu */
+  .nav-menu {
+    display: flex; align-items: center; gap: 2px;
+    list-style: none; flex: 1; justify-content: center;
+  }
+  .nav-item { position: relative; }
+
+  .nav-link {
+    display: flex; align-items: center; gap: 4px;
+    padding: 8px 11px; font-size: .855rem; font-weight: 500;
+    color: var(--brand-gray); text-decoration: none; border-radius: 6px;
+    transition: all .2s; cursor: pointer; background: none; border: none;
+    font-family: 'Noto Sans TC', sans-serif; white-space: nowrap;
+    line-height: 1.2;
+  }
+  .nav-link:hover, .nav-link:focus-visible {
+    color: var(--brand-orange); background: rgba(200,105,42,.06); outline: none;
+  }
+  .nav-link svg { transition: transform .22s; flex-shrink: 0; }
+  .nav-item:hover > .nav-link svg,
+  .nav-item:focus-within > .nav-link svg { transform: rotate(180deg); }
+
+  /* Dropdown */
+  .dropdown {
+    position: absolute; top: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: #FDF9F4; border: 1px solid rgba(200,185,168,.4);
+    border-radius: 10px; box-shadow: 0 8px 32px rgba(44,36,22,.12);
+    min-width: 210px; opacity: 0; visibility: hidden;
+    transition: opacity .22s ease, transform .22s ease, visibility .22s;
+    padding: 8px; z-index: 100;
+  }
+  .nav-item:hover > .dropdown,
+  .nav-item:focus-within > .dropdown {
+    opacity: 1; visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .dropdown-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    padding: 9px 14px; font-size: .845rem; color: var(--brand-gray);
+    text-decoration: none; border-radius: 6px; transition: all .18s; white-space: nowrap;
+  }
+  .dropdown-item:hover { color: var(--brand-orange); background: rgba(200,105,42,.07); }
+
+  /* Right side */
+  .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+  /* Login */
+  .login-wrap { position: relative; }
+  .btn-login {
+    display: flex; align-items: center; gap: 5px; padding: 8px 16px;
+    background: var(--brand-dark); color: #FDF9F4;
+    font-size: .845rem; font-weight: 600; border-radius: 7px;
+    cursor: pointer; border: none; font-family: 'Noto Sans TC', sans-serif;
+    white-space: nowrap; transition: all .2s;
+  }
+  .btn-login:hover { background: var(--brand-orange); }
+  .login-dropdown { left: auto; right: 0; transform: translateX(0) translateY(-6px); }
+  .login-wrap:hover > .login-dropdown { transform: translateX(0) translateY(0); }
+
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 8px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--brand-dark); border-radius: 2px; transition: all .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+  /* ═══════════════════════════════════════
+     Mobile Menu
+  ═══════════════════════════════════════ */
+  .mobile-menu {
+    display: none; position: fixed;
+    top: 68px; left: 0; width: 100%;
+    background: #FDF9F4; border-bottom: 1px solid var(--brand-tan);
+    padding: 8px 20px 28px; z-index: 999;
+    max-height: calc(100vh - 68px); overflow-y: auto;
+    box-shadow: 0 8px 28px rgba(44,36,22,.1);
+    animation: slideDown .24s ease;
+  }
+  .mobile-menu.open { display: block; }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .mobile-link {
+    display: block; padding: 11px 8px; font-size: .9rem;
+    color: var(--brand-gray); text-decoration: none;
+    border-bottom: 1px solid rgba(200,185,168,.18);
+    transition: color .2s; line-height: 1.4;
+  }
+  .mobile-link:hover { color: var(--brand-orange); }
+  .mobile-link--parent { font-weight: 600; color: var(--brand-dark); cursor: default; }
+  .mobile-link--section {
+    font-size: .82rem; font-weight: 600; color: var(--brand-mid-gray);
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .mobile-submenu { padding-left: 16px; }
+  .mobile-submenu .mobile-link {
+    font-size: .855rem; color: var(--brand-mid-gray); font-weight: 400;
+  }
+  .mobile-divider { height: 1px; background: rgba(200,185,168,.3); margin: 10px 0; }
+
+  /* ═══════════════════════════════════════
+     Responsive
+  ═══════════════════════════════════════ */
+  @media (max-width: 960px) {
+    .nav-menu  { display: none; }
+    .hamburger { display: flex; }
+    /* Hide the login dropdown on mobile, use the mobile menu instead */
+    .login-wrap { display: none; }
+  }
+  @media (max-width: 768px) {
+    .nav-inner  { padding: 0 20px; }
+    .brand-name { font-size: .96rem; }
+  }
+</style>
+
+<script is:inline>
+  // ── Navbar scroll state ──
+  (() => {
+    const nb = document.getElementById('navbar');
+    if (!nb) return;
+    const onScroll = () => nb.classList.toggle('scrolled', window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // ── Hamburger / Mobile menu ──
+  (() => {
+    const btn   = document.getElementById('hamburgerBtn');
+    const menu  = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.setAttribute('aria-expanded', String(isOpen));
+      menu.setAttribute('aria-hidden', String(!isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (
+        menu.classList.contains('open') &&
+        !menu.contains(e.target) &&
+        !btn.contains(e.target)
+      ) {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Close on nav link click (in-page anchors)
+    menu.querySelectorAll('a[href^="/"], a[href^="#"]').forEach(a => {
+      a.addEventListener('click', () => {
+        menu.classList.remove('open');
+        btn.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+</script>

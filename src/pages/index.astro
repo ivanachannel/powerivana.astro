@@ -1,0 +1,38 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import CourseLiteSection from '../components/CourseLiteSection.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
+
+// 設定網頁的門面資訊（這幾行非常重要，少了它們會報錯）
+const title = "高嫚英文 Ivana Kao | 專為成人設計的英文補斷層系統";
+const description = "解決多年英文卡關，透過 AI 輔助與結構化學習，幫您補齊英文斷層，實現聽說讀寫全面突破。";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main>
+    {/* 領取免費方法區塊 */}
+    <Hero />
+
+    {/* LITE 課程介紹區塊 */}
+    <CourseLiteSection />
+
+    {/* 學員見證區塊 */}
+    <TestimonialsSection />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* 確保網頁左右不會亂飄 */
+  main {
+    overflow-x: hidden;
+    width: 100%;
+  }
+</style>
