@@ -1,33 +1,26 @@
 ---
 // src/components/Header.astro
-// ══════════════════════════════════════════════════════════════════════════════
-// 導覽列（Navbar）- 高嫚品牌正確內容版
-// ══════════════════════════════════════════════════════════════════════════════
 const NAV = [
   {
-    id: 'gift',
     label: '免費禮物下載',
     href: 'https://www.ivanakao.com/blogs/pdf',
-    external: true,
     dropdown: [
-      { label: '免費英文培訓課程', href: 'https://www.ivanachannel.com', external: true },
-      { label: '如何不恐懼說英文', href: 'https://reurl.cc/eWYeZj', external: true },
-      { label: '免費英文資源社群 SKOOL', href: 'https://www.skool.com/englishpower-5696/about', external: true },
+      { label: '免費英文培訓課程', href: 'https://www.ivanachannel.com' },
+      { label: '如何不恐懼說英文', href: 'https://reurl.cc/eWYeZj' },
+      { label: '免費英文資源社群 SKOOL', href: 'https://www.skool.com/englishpower-5696/about' },
     ],
   },
   {
-    id: 'course',
     label: '課程介紹',
     href: '/#course',
     dropdown: [
       { label: 'LITE 課程介紹', href: '/#course' },
-      { label: '高嫚智本商城', href: 'https://shop.ivanakao.com', external: true },
+      { label: '高嫚智本商城', href: 'https://shop.ivanakao.com' },
     ],
   },
-  { id: 'testimonials', label: '成果見證', href: '/testimonials' },
-  { id: 'blog', label: '高嫚專欄', href: '/blog' },
+  { label: '成果見證', href: '/testimonials' },
+  { label: '高嫚專欄', href: '/blog' },
   {
-    id: 'about',
     label: '關於高嫚',
     href: '/about/story',
     dropdown: [
@@ -37,160 +30,124 @@ const NAV = [
     ],
   },
 ];
-
-const LOGIN_ITEMS = [
-  { label: '高嫚課程登入', href: 'https://sso.teachable.com/secure/1078310/identity/login/otp' },
-  { label: '高嫚AI教練登入', href: 'https://ai.ivanakao.com' },
-];
 ---
 
-<nav id="navbar">
-  <div class="nav-inner">
-    <a href="/" class="brand-name">江臻冠英語高嫚老師</a>
+<header id="site-header">
+  <div class="nav-container">
+    <a href="/" class="logo-link">江臻冠英語高嫚老師</a>
     
-    <ul class="nav-menu">
-      {NAV.map(item => (
-        <li class="nav-item">
-          {item.dropdown ? (
-            <>
-              <button class="nav-link-btn" data-nav-btn>
-                {item.label}
-                <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <div class="dropdown-box">
+    <nav class="desktop-nav-wrapper">
+      <ul class="nav-list">
+        {NAV.map(item => (
+          <li class="nav-item">
+            <a href={item.href} class="nav-link-main">{item.label}</a>
+            {item.dropdown && (
+              <ul class="nav-dropdown">
                 {item.dropdown.map(sub => (
-                  <a href={sub.href} class="dropdown-link">{sub.label}</a>
+                  <li><a href={sub.href} target={sub.href.startsWith('http') ? "_blank" : "_self"}>{sub.label}</a></li>
                 ))}
-              </div>
-            </>
-          ) : (
-            <a href={item.href} class="nav-link-btn">{item.label}</a>
-          )}
-        </li>
-      ))}
-    </ul>
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
 
-    <div class="nav-right">
-      <div class="login-wrapper">
-        <button class="btn-login-main">學員登入</button>
-        <div class="dropdown-box">
-          {LOGIN_ITEMS.map(item => <a href={item.href} class="dropdown-link">{item.label}</a>)}
-        </div>
-      </div>
-      <button class="hamburger-toggle" id="hamburgerBtn">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+    <button id="menu-trigger" class="hamburger-icon" aria-label="選單開關">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</nav>
+</header>
 
-<div class="mobile-menu-overlay" id="mobileOverlay"></div>
-<div class="mobile-side-drawer" id="mobileMenu">
-  <div class="drawer-content">
+<div id="mobile-menu-drawer" class="mobile-drawer">
+  <div class="drawer-header">
+    <span class="drawer-logo">選單</span>
+    <button id="close-trigger" class="close-btn">&times;</button>
+  </div>
+  <nav class="drawer-nav">
     {NAV.map(item => (
-      <div class="drawer-section">
-        {item.dropdown ? (
-          <>
-            <span class="drawer-title">{item.label}</span>
-            {item.dropdown.map(sub => <a href={sub.href} class="drawer-link">{sub.label}</a>)}
-          </>
-        ) : (
-          <a href={item.href} class="drawer-link-main">{item.label}</a>
+      <div class="drawer-item">
+        <a href={item.href} class="drawer-link-top">{item.label}</a>
+        {item.dropdown && (
+          <div class="drawer-subs">
+            {item.dropdown.map(sub => (
+              <a href={sub.href} target={sub.href.startsWith('http') ? "_blank" : "_self"}>{sub.label}</a>
+            ))}
+          </div>
         )}
       </div>
     ))}
-    <div class="drawer-divider"></div>
-    <span class="drawer-title">學員登入</span>
-    {LOGIN_ITEMS.map(item => <a href={item.href} class="drawer-link">{item.label}</a>)}
-  </div>
+  </nav>
 </div>
 
+<div id="drawer-overlay" class="drawer-overlay"></div>
+
 <style is:global>
-  /* 全域基礎設定 */
-  #navbar { 
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; 
-    background: #FDF9F4; border-bottom: 1px solid rgba(200,185,168,0.3);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-  }
-  .nav-inner { 
-    max-width: 1280px; margin: 0 auto; padding: 0 24px; 
-    height: 70px; display: flex; align-items: center; justify-content: space-between; 
-  }
-  .brand-name { font-weight: 700; color: #2C2416; text-decoration: none; font-size: 1.1rem; }
+  /* 基礎設定 */
+  #site-header { position: fixed; top: 0; left: 0; width: 100%; height: 72px; background: #FDF9F4; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .nav-container { max-width: 1200px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+  .logo-link { font-weight: 700; color: #2C2416; text-decoration: none; font-size: 1.15rem; }
+
+  /* 電腦版樣式 */
+  .nav-list { display: flex; list-style: none; gap: 10px; margin: 0; padding: 0; }
+  .nav-item { position: relative; padding: 10px 0; }
+  .nav-link-main { color: #4A4035; text-decoration: none; font-weight: 500; padding: 8px 12px; transition: color 0.2s; }
+  .nav-link-main:hover { color: #C8692A; }
   
-  /* 電腦版選單樣式 */
-  .nav-menu { display: flex; list-style: none; gap: 8px; margin: 0; padding: 0; }
-  .nav-item { position: relative; }
-  .nav-link-btn, .btn-login-main { 
-    background: none; border: none; padding: 10px 15px; cursor: pointer; 
-    color: #4A4035; font-weight: 500; font-size: 1rem; text-decoration: none;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .nav-link-btn:hover { color: #C8692A; }
+  .nav-dropdown { position: absolute; top: 100%; left: 0; background: #FFF; min-width: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 8px; padding: 10px 0; display: none; list-style: none; }
+  .nav-item:hover .nav-dropdown { display: block; }
+  .nav-dropdown a { display: block; padding: 10px 20px; color: #4A4035; text-decoration: none; font-size: 0.95rem; }
+  .nav-dropdown a:hover { background: #FAF7F2; color: #C8692A; }
 
-  /* 電腦版下拉選單 */
-  .dropdown-box { 
-    display: none; position: absolute; top: 100%; left: 0; 
-    background: white; min-width: 200px; border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 10px 0; z-index: 10000;
-  }
-  .nav-item:hover .dropdown-box, .login-wrapper:hover .dropdown-box { display: block; }
-  .dropdown-link { display: block; padding: 10px 20px; color: #4A4035; text-decoration: none; font-size: 0.95rem; }
-  .dropdown-link:hover { background: #FAF7F2; color: #C8692A; }
+  /* 漢堡圖示 */
+  .hamburger-icon { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; }
+  .hamburger-icon span { width: 24px; height: 2px; background: #2C2416; transition: 0.3s; }
 
-  /* 漢堡按鈕與手機版 */
-  .hamburger-toggle { 
-    display: none; flex-direction: column; justify-content: space-around; 
-    width: 26px; height: 20px; background: none; border: none; cursor: pointer; padding: 0;
-  }
-  .hamburger-toggle span { width: 100%; height: 2px; background: #2C2416; transition: 0.3s; }
-
-  .mobile-menu-overlay { 
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9997; 
-  }
-  .mobile-menu-overlay.active { display: block; }
-
-  .mobile-side-drawer { 
-    position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; 
-    background: #FDF9F4; z-index: 9998; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-    padding: 80px 24px 40px; overflow-y: auto;
-  }
-  .mobile-side-drawer.active { right: 0; }
+  /* 手機版抽屜 */
+  .mobile-drawer { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: #FDF9F4; z-index: 2001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 20px; overflow-y: auto; }
+  .mobile-drawer.active { right: 0; }
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+  .drawer-logo { font-weight: 700; color: #C8692A; }
+  .close-btn { font-size: 2rem; background: none; border: none; cursor: pointer; color: #4A4035; line-height: 1; }
+  .drawer-link-top { display: block; font-weight: 700; color: #2C2416; text-decoration: none; padding: 12px 0; font-size: 1.1rem; }
+  .drawer-subs { padding-left: 15px; margin-bottom: 15px; }
+  .drawer-subs a { display: block; padding: 8px 0; color: #4A4035; text-decoration: none; font-size: 1rem; }
   
-  .drawer-section { margin-bottom: 20px; }
-  .drawer-title { color: #C8692A; font-weight: 700; font-size: 0.85rem; display: block; margin-bottom: 8px; }
-  .drawer-link { display: block; padding: 8px 0 8px 12px; color: #4A4035; text-decoration: none; font-size: 1rem; }
-  .drawer-link-main { display: block; font-weight: 600; color: #2C2416; text-decoration: none; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 1.1rem; }
-  .drawer-divider { height: 1px; background: rgba(0,0,0,0.05); margin: 20px 0; }
+  .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 2000; display: none; backdrop-filter: blur(2px); }
+  .drawer-overlay.active { display: block; }
 
-  /* 斷點設定：電腦與手機切換點 */
-  @media (max-width: 850px) {
-    .nav-menu, .login-wrapper { display: none !important; }
-    .hamburger-toggle { display: flex !important; }
+  /* 響應式切換點 */
+  @media (max-width: 1024px) {
+    .desktop-nav-wrapper { display: none; }
+    .hamburger-icon { display: flex; }
   }
 </style>
 
 <script is:inline>
-  function initHeaderLogic() {
-    const btn = document.getElementById('hamburgerBtn');
-    const menu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('mobileOverlay');
+  function setupNavbar() {
+    const trigger = document.getElementById('menu-trigger');
+    const close = document.getElementById('close-trigger');
+    const drawer = document.getElementById('mobile-menu-drawer');
+    const overlay = document.getElementById('drawer-overlay');
 
-    if (!btn || !menu || !overlay || btn.dataset.ready) return;
-    btn.dataset.ready = 'true';
+    if (!trigger || !drawer || !overlay) return;
 
-    const toggle = () => {
-      menu.classList.toggle('active');
-      overlay.classList.toggle('active');
-      btn.classList.toggle('active');
-      document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+    const toggleMenu = (open) => {
+      drawer.classList.toggle('active', open);
+      overlay.classList.toggle('active', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     };
 
-    btn.addEventListener('click', toggle);
-    overlay.addEventListener('click', toggle);
+    trigger.onclick = () => toggleMenu(true);
+    close.onclick = () => toggleMenu(false);
+    overlay.onclick = () => toggleMenu(false);
+
+    // 點擊連結後自動關閉（用於單頁錨點連動）
+    drawer.querySelectorAll('a').forEach(link => {
+      link.onclick = () => toggleMenu(false);
+    });
   }
 
-  document.addEventListener('DOMContentLoaded', initHeaderLogic);
-  document.addEventListener('astro:page-load', initHeaderLogic);
-  initHeaderLogic();
+  document.addEventListener('DOMContentLoaded', setupNavbar);
+  document.addEventListener('astro:page-load', setupNavbar);
 </script>
