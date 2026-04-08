@@ -1,42 +1,68 @@
 ---
-import Layout from '../../layouts/BlogLayout.astro';
-import PostGrid from '../../components/PostGrid.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const testimonialItems = [
   {
     title: '三個月單字量明顯提升',
     image: '/images/testimonials/testimonial-01.jpg',
     description: '學員從記不住單字，到能穩定累積並開始主動使用。',
-    href: '/testimonials/student-01',
   },
   {
     title: '原本很怕英文，現在敢開口',
     image: '/images/testimonials/testimonial-02.jpg',
     description: '從抗拒英文到開始有自信，最大的改變不是分數，而是心態。',
-    href: '/testimonials/student-02',
   },
   {
     title: '工作上真的開始用得到',
     image: '/images/testimonials/testimonial-03.jpg',
     description: '不只是背單字，而是開始看得懂、用得出、記得住。',
-    href: '/testimonials/student-03',
   },
 ];
 ---
 
-<Layout title="金牌見證">
-  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
-    <div class="max-w-3xl">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
-        金牌見證
+<BaseLayout 
+  title="成果見證 - 江臻冠英語高嫚老師"
+  description="真實學員回饋與改變歷程"
+>
+  <div class="max-w-7xl mx-auto px-4 py-16 md:py-20">
+
+    <!-- 靠左對齊標題區（與高嫚專欄一致） -->
+    <div class="max-w-3xl mx-auto md:mx-0 text-center md:text-left mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
+        成果見證
       </h1>
-      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
-        真實學員回饋與改變歷程。
+      <p class="mt-6 text-lg text-gray-600">
+        真實學員回饋與改變歷程
+      </p>
+      <p class="mt-4 text-base text-gray-500">
+        看到她們的進步，就是我最大的動力
       </p>
     </div>
 
-    <div class="mt-10">
-      <PostGrid items={testimonialItems} />
+    <!-- 三欄卡片 -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {testimonialItems.map((item) => (
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-orange-100 hover:shadow-md transition-all duration-300">
+          <img 
+            src={item.image} 
+            alt={item.title}
+            class="w-full h-56 object-cover"
+          />
+          <div class="p-7">
+            <h3 class="font-semibold text-xl text-gray-900 mb-4">
+              {item.title}
+            </h3>
+            <p class="text-gray-600 leading-relaxed">
+              {item.description}
+            </p>
+          </div>
+        </div>
+      ))}
     </div>
-  </section>
-</Layout>
+
+    <div class="mt-20 text-center md:text-left text-sm text-gray-500">
+      更多真實學員故事與詳細進步歷程持續更新中，歡迎聯繫高嫚老師了解課程
+    </div>
+
+  </div>
+</BaseLayout>

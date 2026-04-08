@@ -1,59 +1,191 @@
 ---
-// src/components/Header.astro
 const NAV = [
-  { label: '免費禮物下載', href: 'https://www.ivanakao.com/blogs/pdf' },
-  { label: '課程介紹', href: '/#course' },
+  { 
+    label: '免費禮物下載', 
+    hasDropdown: true,
+    dropdownItems: [
+      { label: '免費英文培訓課程', href: '#' },
+      { label: '如何不恐懼說英文（免費攻略下載）', href: '#' },
+      { label: '免費英文資源社群 SKOOL', href: '#' },
+    ]
+  },
+  { 
+    label: '課程介紹', 
+    hasDropdown: true,
+    dropdownItems: [
+      { label: 'LITE 課程介紹', href: '#' },
+      { label: '高嫚智本商城', href: '#' },
+    ]
+  },
   { label: '成果見證', href: '/testimonials' },
   { label: '高嫚專欄', href: '/blog' },
-  { label: '關於高嫚', href: '/about/story' }
+  { 
+    label: '關於高嫚', 
+    hasDropdown: true,
+    dropdownItems: [
+      { label: '媒體報導', href: '#' },
+      { label: '高嫚故事', href: '#' },
+      { label: '聯繫高嫚', href: '#' },
+    ]
+  }
 ];
 ---
 
 <header class="main-header">
   <div class="header-inner">
     <a href="/" class="site-logo">江臻冠英語高嫚老師</a>
-    
+   
     <nav class="nav-pc">
-      {NAV.map(item => (
-        <a href={item.href} class="nav-item">{item.label}</a>
+      {NAV.map((item) => (
+        <div class="nav-group relative group" key={item.label}>
+          <a 
+            href={item.href || '#'} 
+            class="nav-item flex items-center gap-1"
+          >
+            {item.label}
+            {item.hasDropdown && <span class="text-xs">▼</span>}
+          </a>
+
+          {item.hasDropdown && (
+            <div class="dropdown absolute left-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-xl py-4 px-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 border">
+              {item.dropdownItems.map((d, i) => (
+                <a
+                  href={d.href}
+                  class="block py-3 px-5 hover:bg-orange-50 rounded-xl text-gray-700 hover:text-orange-600 transition-colors"
+                  key={i}
+                >
+                  {d.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
       ))}
     </nav>
 
-    <button id="h-toggle" class="h-toggle">
+    <!-- 手機漢堡按鈕 -->
+    <button id="h-toggle" class="h-toggle" aria-label="選單">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
 
+<!-- 手機側邊選單 -->
 <div id="side-menu" class="side-menu">
   <div class="menu-content">
     <button id="h-close" class="h-close">&times;</button>
-    {NAV.map(item => (
-      <a href={item.href} class="menu-link">{item.label}</a>
+    {NAV.map((item) => (
+      <a href={item.href || '#'} class="menu-link">{item.label}</a>
     ))}
   </div>
 </div>
 
 <style is:global>
-  /* 鎖死頂部，不與其他組件衝突 */
-  .main-header { position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: #FDF9F4; z-index: 9999; border-bottom: 1px solid #eee; }
-  .header-inner { max-width: 1200px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
-  .site-logo { font-weight: bold; color: #2C2416; text-decoration: none; font-size: 1.1rem; }
-  
-  /* 電腦版顯示，手機版隱藏 */
-  .nav-pc { display: flex; gap: 20px; }
-  .nav-item { color: #4A4035; text-decoration: none; font-weight: 500; }
+  .main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    background: #FDF9F4;
+    z-index: 9999;
+    border-bottom: 1px solid #eee;
+  }
 
-  /* 漢堡圖示 (強制在 900px 以下出現) */
-  .h-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 10px; }
-  .h-toggle span { width: 25px; height: 2px; background: #2C2416; }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+  }
 
-  /* 手機選單抽屜 */
-  .side-menu { position: fixed; top: 0; right: -100%; width: 280px; height: 100vh; background: #FDF9F4; z-index: 10000; transition: 0.3s; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
-  .side-menu.active { right: 0; }
-  .menu-content { padding: 80px 30px; display: flex; flex-direction: column; gap: 20px; }
-  .h-close { position: absolute; top: 20px; right: 20px; font-size: 2rem; border: none; background: none; cursor: pointer; }
-  .menu-link { font-size: 1.2rem; font-weight: bold; color: #C8692A; text-decoration: none; }
+  .site-logo {
+    font-weight: 700;
+    color: #2C2416;
+    text-decoration: none;
+    font-size: 1.15rem;
+  }
+
+  .nav-pc {
+    display: flex;
+    gap: 32px;
+  }
+
+  .nav-item {
+    color: #4A4035;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 0;
+  }
+
+  /* 下拉選單核心樣式 */
+  .dropdown {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12);
+    transition: all 0.25s ease;
+  }
+
+  .nav-group:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* 手機版 */
+  .h-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+  .h-toggle span {
+    width: 26px;
+    height: 2.5px;
+    background: #2C2416;
+  }
+
+  .side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: #FDF9F4;
+    z-index: 10000;
+    transition: right 0.35s ease;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+  }
+  .side-menu.active {
+    right: 0;
+  }
+
+  .menu-content {
+    padding: 90px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .h-close {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 2.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .menu-link {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #C8692A;
+    text-decoration: none;
+  }
 
   @media (max-width: 900px) {
     .nav-pc { display: none !important; }
@@ -62,15 +194,20 @@ const NAV = [
 </style>
 
 <script is:inline>
-  function initNav() {
-    const btn = document.getElementById('h-toggle');
+  // 手機漢堡選單
+  function initMobileMenu() {
+    const toggle = document.getElementById('h-toggle');
     const close = document.getElementById('h-close');
     const menu = document.getElementById('side-menu');
-    if (btn && menu) {
-      btn.onclick = () => menu.classList.add('active');
-      close.onclick = () => menu.classList.remove('active');
+
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => menu.classList.add('active'));
+    }
+    if (close && menu) {
+      close.addEventListener('click', () => menu.classList.remove('active'));
     }
   }
-  document.addEventListener('DOMContentLoaded', initNav);
-  document.addEventListener('astro:page-load', initNav);
+
+  document.addEventListener('DOMContentLoaded', initMobileMenu);
+  document.addEventListener('astro:page-load', initMobileMenu);
 </script>

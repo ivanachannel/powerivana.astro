@@ -1,36 +1,37 @@
 ---
-// src/layouts/BlogLayout.astro
 import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
   title: string;
   description: string;
-  pubDate?: Date;           // 改成可選
-  category: string;
+  pubDate?: Date;
+  category?: string;        // 改成可選
   tags?: string[];
   author?: string;
   readingTime?: number;
   canonical?: string;
   ogImage?: string;
+  showBreadcrumb?: boolean; // ← 新增：控制是否顯示麵包屑
 }
 
 const {
   title,
   description,
   pubDate,
-  category,
+  category = '',
   tags = [],
   author = '高嫚老師',
   readingTime,
   canonical,
   ogImage,
+  showBreadcrumb = true,     // 預設顯示
 } = Astro.props;
 
 // 安全處理日期
-const dateStr = pubDate 
+const dateStr = pubDate
   ? pubDate.toLocaleDateString('zh-TW', {
-      year: 'numeric', 
-      month: 'long', 
+      year: 'numeric',
+      month: 'long',
       day: 'numeric'
     })
   : '';
@@ -44,58 +45,73 @@ const dateStr = pubDate
   ogType="article"
   pubDate={pubDate}
 >
-  <article style="padding-top: 96px; min-height: 80vh;">
-    <div class="blog-wrap">
-      <!-- Breadcrumb -->
-      <nav class="blog-breadcrumb" aria-label="麵包屑">
-        <a href="/">首頁</a>
-        <span aria-hidden="true"> / </span>
-        <a href="/blog/">高嫚專欄</a>
-        <span aria-hidden="true"> / </span>
-        <span>{category}</span>
-      </nav>
+  <article class="pt-16 min-h-[80vh]">
+    <div class="blog-wrap max-w-7xl mx-auto px-4 md:px-6">
 
-      <!-- Header -->
-      <header class="blog-header">
-        <a href={`/blog/?cat=${category}`} class="blog-cat-badge">{category}</a>
-        <h1 class="blog-post-title">{title}</h1>
-        <div class="blog-meta">
-          <span>{author}</span>
-          <span aria-hidden="true">·</span>
-          {dateStr && <time datetime={pubDate?.toISOString()}>{dateStr}</time>}
-          {readingTime && (
-            <>
-              <span aria-hidden="true">·</span>
-              <span>閱讀需時 {readingTime} 分鐘</span>
-            </>
+      <!-- Breadcrumb：只有在 showBreadcrumb 為 true 時才顯示 -->
+      {showBreadcrumb && (
+        <nav class="blog-breadcrumb mb-8 text-sm text-gray-500" aria-label="麵包屑">
+          <a href="/">首頁</a>
+          <span aria-hidden="true"> / </span>
+          <a href="/blog/">高嫚專欄</a>
+          <span aria-hidden="true"> / </span>
+          <span>{category || title}</span>
+        </nav>
+      )}
+
+      <!-- Header：成果見證頁面會使用自己的標題，所以這裡簡化 -->
+      {showBreadcrumb && (
+        <header class="blog-header mb-10">
+          {category && (
+            <a href={`/blog/?cat=${category}`} class="blog-cat-badge">{category}</a>
           )}
-        </div>
-        {tags.length > 0 && (
-          <div class="blog-tags" role="list" aria-label="標籤">
-            {tags.map(tag => (
-              <span class="blog-tag" role="listitem">#{tag}</span>
-            ))}
+          <h1 class="blog-post-title">{title}</h1>
+          <div class="blog-meta">
+            <span>{author}</span>
+            {dateStr && (
+              <>
+                <span aria-hidden="true">·</span>
+                <time datetime={pubDate?.toISOString()}>{dateStr}</time>
+              </>
+            )}
+            {readingTime && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>閱讀需時 {readingTime} 分鐘</span>
+              </>
+            )}
           </div>
-        )}
-      </header>
+          {tags.length > 0 && (
+            <div class="blog-tags">
+              {tags.map(tag => (
+                <span class="blog-tag">#{tag}</span>
+              ))}
+            </div>
+          )}
+        </header>
+      )}
 
       <!-- Divider -->
-      <div style="height:1px; background:var(--brand-tan); margin-bottom:44px;"></div>
+      {showBreadcrumb && (
+        <div class="h-px bg-[var(--brand-tan)] mb-12"></div>
+      )}
 
-      <!-- Body -->
+      <!-- 主要內容 -->
       <div class="prose-ivana">
         <slot />
       </div>
 
       <!-- Footer -->
-      <footer class="blog-post-footer">
-        <a href="/blog/" class="back-link">← 返回高嫚專欄</a>
-        <a href="https://www.ivanakao.com/blogs/pdf"
-           target="_blank" rel="noopener noreferrer"
-           class="btn-primary" style="font-size:.9rem; padding:11px 22px;">
-          領取更多免費資源
-        </a>
-      </footer>
+      {showBreadcrumb && (
+        <footer class="blog-post-footer mt-20">
+          <a href="/blog/" class="back-link">← 返回高嫚專欄</a>
+          <a href="https://www.ivanakao.com/blogs/pdf"
+             target="_blank" rel="noopener noreferrer"
+             class="btn-primary" style="font-size:.9rem; padding:11px 22px;">
+            領取更多免費資源
+          </a>
+        </footer>
+      )}
     </div>
   </article>
 </BaseLayout>
