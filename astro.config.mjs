@@ -1,19 +1,20 @@
-// astro.config.mjs
 import { defineConfig } from 'astro/config';
-// import mdx from '@astrojs/mdx';        // 暫時註解
-// import sitemap from '@astrojs/sitemap'; // 暫時註解
 
 export default defineConfig({
-  site: 'https://power.ivanakao.com',
+  site: 'https://www.ivanakao.com',
+  output: 'static',
+  trailingSlash: 'always',        // 已改成 'always'，比較穩定
+
+  // 開發伺服器設定
+  server: {
+    host: true,
+    port: 4321,
+    // open: true,   // 如果想每次 dev 自動開啟瀏覽器，可以把這行註解取消
+  },
 
   integrations: [
-    // mdx(),      // 暫時註解
-    // sitemap({   // 暫時註解，避免 build 錯誤
-    //   filter: (page) => !page.includes('/drafts/'),
-    //   changefreq: 'weekly',
-    //   priority: 0.7,
-    //   lastmod: new Date(),
-    // }),
+    // mdx(),
+    // sitemap({ ... }),
   ],
 
   markdown: {

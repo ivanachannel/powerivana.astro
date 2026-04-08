@@ -3,15 +3,15 @@
 import BaseLayout from './BaseLayout.astro';
 
 export interface Props {
-  title:        string;
-  description:  string;
-  pubDate:      Date;
-  category:     string;
-  tags?:        string[];
-  author?:      string;
+  title: string;
+  description: string;
+  pubDate?: Date;           // 改成可選
+  category: string;
+  tags?: string[];
+  author?: string;
   readingTime?: number;
-  canonical?:   string;
-  ogImage?:     string;
+  canonical?: string;
+  ogImage?: string;
 }
 
 const {
@@ -19,17 +19,23 @@ const {
   description,
   pubDate,
   category,
-  tags        = [],
-  author      = '高嫚老師',
+  tags = [],
+  author = '高嫚老師',
   readingTime,
   canonical,
   ogImage,
 } = Astro.props;
 
-const dateStr = pubDate.toLocaleDateString('zh-TW', {
-  year: 'numeric', month: 'long', day: 'numeric',
-});
+// 安全處理日期
+const dateStr = pubDate 
+  ? pubDate.toLocaleDateString('zh-TW', {
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric'
+    })
+  : '';
 ---
+
 <BaseLayout
   title={title}
   description={description}
@@ -40,7 +46,6 @@ const dateStr = pubDate.toLocaleDateString('zh-TW', {
 >
   <article style="padding-top: 96px; min-height: 80vh;">
     <div class="blog-wrap">
-
       <!-- Breadcrumb -->
       <nav class="blog-breadcrumb" aria-label="麵包屑">
         <a href="/">首頁</a>
@@ -57,7 +62,7 @@ const dateStr = pubDate.toLocaleDateString('zh-TW', {
         <div class="blog-meta">
           <span>{author}</span>
           <span aria-hidden="true">·</span>
-          <time datetime={pubDate.toISOString()}>{dateStr}</time>
+          {dateStr && <time datetime={pubDate?.toISOString()}>{dateStr}</time>}
           {readingTime && (
             <>
               <span aria-hidden="true">·</span>
@@ -94,93 +99,3 @@ const dateStr = pubDate.toLocaleDateString('zh-TW', {
     </div>
   </article>
 </BaseLayout>
-
-<style is:global>
-  /* ── Blog layout wrapper ── */
-  .blog-wrap {
-    max-width: 760px; margin: 0 auto;
-    padding: 0 24px 96px;
-  }
-  .blog-breadcrumb {
-    font-size: .78rem; color: var(--brand-light-gray);
-    margin-bottom: 28px;
-  }
-  .blog-breadcrumb a {
-    color: var(--brand-mid-gray); text-decoration: none; transition: color .2s;
-  }
-  .blog-breadcrumb a:hover { color: var(--brand-orange); }
-
-  .blog-header      { margin-bottom: 28px; }
-  .blog-cat-badge {
-    display: inline-block; padding: 4px 12px;
-    background: var(--brand-orange); color: #fff;
-    font-size: .76rem; font-weight: 600; border-radius: 4px;
-    text-decoration: none; letter-spacing: .05em; margin-bottom: 18px;
-  }
-  .blog-post-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 2rem; font-weight: 700;
-    color: var(--brand-dark); line-height: 1.45; margin-bottom: 16px;
-  }
-  .blog-meta {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    font-size: .83rem; color: var(--brand-mid-gray);
-  }
-  .blog-tags    { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-  .blog-tag {
-    padding: 4px 11px; background: rgba(200,105,42,.1);
-    border-radius: 12px; font-size: .78rem;
-    color: var(--brand-orange); font-weight: 600;
-  }
-
-  /* ── Prose styles ── */
-  .prose-ivana {
-    color: var(--brand-gray); line-height: 1.9; font-size: .97rem;
-    margin-bottom: 56px;
-  }
-  .prose-ivana h2 {
-    font-family: 'Noto Serif TC', serif; font-size: 1.45rem;
-    font-weight: 700; color: var(--brand-dark); margin: 2.4em 0 .9em;
-  }
-  .prose-ivana h3 {
-    font-family: 'Noto Serif TC', serif; font-size: 1.18rem;
-    font-weight: 700; color: var(--brand-dark); margin: 2em 0 .7em;
-  }
-  .prose-ivana p  { margin-bottom: 1.4em; }
-  .prose-ivana ul,
-  .prose-ivana ol { padding-left: 1.6em; margin-bottom: 1.4em; }
-  .prose-ivana li { margin-bottom: .5em; }
-  .prose-ivana blockquote {
-    border-left: 4px solid var(--brand-orange);
-    padding: .8em 1.2em;
-    background: rgba(200,105,42,.06);
-    border-radius: 0 8px 8px 0;
-    margin: 1.6em 0; color: var(--brand-gray);
-  }
-  .prose-ivana strong { color: var(--brand-dark); font-weight: 700; }
-  .prose-ivana a {
-    color: var(--brand-orange);
-    text-decoration: underline; text-underline-offset: 3px;
-  }
-  .prose-ivana a:hover { color: var(--brand-orange-dk); }
-  .prose-ivana hr {
-    border: none; border-top: 1px solid var(--brand-tan); margin: 2.4em 0;
-  }
-
-  /* ── Blog post footer ── */
-  .blog-post-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
-    padding-top: 28px; border-top: 1px solid var(--brand-tan);
-  }
-  .back-link {
-    color: var(--brand-orange); font-weight: 600;
-    text-decoration: none; font-size: .9rem; transition: opacity .2s;
-  }
-  .back-link:hover { opacity: .75; }
-
-  @media (max-width: 600px) {
-    .blog-post-title { font-size: 1.65rem; }
-    .blog-post-footer { flex-direction: column; }
-  }
-</style>
