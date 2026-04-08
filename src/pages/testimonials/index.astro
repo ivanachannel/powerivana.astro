@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostGrid from '../../components/PostGrid.astro';
+
+const testimonialItems = [
+  {
+    title: '三個月單字量明顯提升',
+    image: '/images/testimonials/testimonial-01.jpg',
+    description: '學員從記不住單字，到能穩定累積並開始主動使用。',
+    href: '/testimonials/student-01',
+  },
+  {
+    title: '原本很怕英文，現在敢開口',
+    image: '/images/testimonials/testimonial-02.jpg',
+    description: '從抗拒英文到開始有自信，最大的改變不是分數，而是心態。',
+    href: '/testimonials/student-02',
+  },
+  {
+    title: '工作上真的開始用得到',
+    image: '/images/testimonials/testimonial-03.jpg',
+    description: '不只是背單字，而是開始看得懂、用得出、記得住。',
+    href: '/testimonials/student-03',
+  },
+];
+---
+
+<Layout title="金牌見證">
+  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        金牌見證
+      </h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
+        真實學員回饋與改變歷程。
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <PostGrid items={testimonialItems} />
+    </div>
+  </section>
+</Layout>

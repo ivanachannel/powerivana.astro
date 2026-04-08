@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostGrid from '../../components/PostGrid.astro';
+
+const blogIndexItems = [
+  {
+    title: '高嫚世界觀',
+    image: '/images/blog/worldview-cover.jpg',
+    description: '從局勢、思維、選擇，到你如何建立自己的判斷與格局。',
+    href: '/blog/worldview',
+  },
+  {
+    title: '精神指引',
+    image: '/images/blog/mindset-cover.jpg',
+    description: '給正在走長路的人，一套穩定、清楚、能往前走的內在系統。',
+    href: '/blog/mindset',
+  },
+  {
+    title: '英文懶人包',
+    image: '/images/blog/english-cover.jpg',
+    description: '整理最常見、最實用、最容易卡住的英文問題，快速查找。',
+    href: '/blog/english',
+  },
+];
+---
+
+<Layout title="高嫚專欄">
+  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        高嫚專欄
+      </h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
+        世界觀、精神指引、英文懶人包，從判斷到表達，一次整理。
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <PostGrid items={blogIndexItems} />
+    </div>
+  </section>
+</Layout>

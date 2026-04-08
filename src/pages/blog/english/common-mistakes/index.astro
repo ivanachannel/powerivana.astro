@@ -1,0 +1,42 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import PostGrid from '../../../../components/PostGrid.astro';
+
+const items = [
+  {
+    title: '示範文章標題一',
+    image: '/images/blog/demo-07.jpg',
+    description: '這裡之後放台灣人常錯英文文章摘要。',
+    href: '/blog/english/common-mistakes/demo-01',
+  },
+  {
+    title: '示範文章標題二',
+    image: '/images/blog/demo-08.jpg',
+    description: '這裡之後放台灣人常錯英文文章摘要。',
+    href: '/blog/english/common-mistakes/demo-02',
+  },
+  {
+    title: '示範文章標題三',
+    image: '/images/blog/demo-09.jpg',
+    description: '這裡之後放台灣人常錯英文文章摘要。',
+    href: '/blog/english/common-mistakes/demo-03',
+  },
+];
+---
+
+<Layout title="台灣人常錯英文">
+  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        台灣人常錯英文
+      </h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
+        整理最常見、最容易出錯的英文表達。
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <PostGrid items={items} />
+    </div>
+  </section>
+</Layout>

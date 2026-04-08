@@ -1,0 +1,42 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PostGrid from '../../../components/PostGrid.astro';
+
+const englishItems = [
+  {
+    title: '台灣人常錯英文',
+    image: '/images/blog/common-mistakes-cover.jpg',
+    description: '整理台灣人最常用錯、最容易被中文直譯影響的英文說法。',
+    href: '/blog/english/common-mistakes',
+  },
+  {
+    title: '這些英文怎麼說',
+    image: '/images/blog/how-to-say-cover.jpg',
+    description: '把中文常見語境，轉成自然、好用、真正會用到的英文。',
+    href: '/blog/english/how-to-say',
+  },
+  {
+    title: '要用哪一個介係詞',
+    image: '/images/blog/prepositions-cover.jpg',
+    description: '釐清 at / in / on / for / to / with 等常見介係詞用法。',
+    href: '/blog/english/prepositions',
+  },
+];
+---
+
+<Layout title="英文懶人包">
+  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        英文懶人包
+      </h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
+        常錯英文、中文怎麼說、介係詞選擇，一次整理。
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <PostGrid items={englishItems} />
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,26 @@
+---
+const { title, image, description, href } = Astro.props;
+---
+
+<a href={href} class="group block">
+  <article class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+    <div class="overflow-hidden">
+      <img
+        src={image}
+        alt={title}
+        class="aspect-video w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="p-5">
+      <h3 class="text-xl font-bold leading-snug text-gray-900 group-hover:text-orange-600">
+        {title}
+      </h3>
+
+      <p class="mt-3 text-sm leading-6 text-gray-600 line-clamp-3">
+        {description}
+      </p>
+    </div>
+  </article>
+</a>

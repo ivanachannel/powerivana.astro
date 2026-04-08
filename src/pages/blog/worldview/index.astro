@@ -1,0 +1,42 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PostGrid from '../../../components/PostGrid.astro';
+
+const items = [
+  {
+    title: '示範文章標題一',
+    image: '/images/blog/demo-01.jpg',
+    description: '這裡之後放高嫚世界觀的文章摘要。',
+    href: '/blog/worldview/demo-01',
+  },
+  {
+    title: '示範文章標題二',
+    image: '/images/blog/demo-02.jpg',
+    description: '這裡之後放高嫚世界觀的文章摘要。',
+    href: '/blog/worldview/demo-02',
+  },
+  {
+    title: '示範文章標題三',
+    image: '/images/blog/demo-03.jpg',
+    description: '這裡之後放高嫚世界觀的文章摘要。',
+    href: '/blog/worldview/demo-03',
+  },
+];
+---
+
+<Layout title="高嫚世界觀">
+  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        高嫚世界觀
+      </h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
+        這裡整理高嫚對世界、局勢、判斷與成長的觀點文章。
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <PostGrid items={items} />
+    </div>
+  </section>
+</Layout>

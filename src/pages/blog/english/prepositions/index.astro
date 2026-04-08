@@ -1,0 +1,42 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import PostGrid from '../../../../components/PostGrid.astro';
+
+const items = [
+  {
+    title: '示範文章標題一',
+    image: '/images/blog/demo-13.jpg',
+    description: '這裡之後放介係詞文章摘要。',
+    href: '/blog/english/prepositions/demo-01',
+  },
+  {
+    title: '示範文章標題二',
+    image: '/images/blog/demo-14.jpg',
+    description: '這裡之後放介係詞文章摘要。',
+    href: '/blog/english/prepositions/demo-02',
+  },
+  {
+    title: '示範文章標題三',
+    image: '/images/blog/demo-15.jpg',
+    description: '這裡之後放介係詞文章摘要。',
+    href: '/blog/english/prepositions/demo-03',
+  },
+];
+---
+
+<Layout title="要用哪一個介係詞">
+  <section class="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:py-16">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 md:text-5xl">
+        要用哪一個介係詞
+      </h1>
+      <p class="mt-4 text-base leading-7 text-gray-600 md:text-lg">
+        系統整理常見介係詞的使用方式與差異。
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <PostGrid items={items} />
+    </div>
+  </section>
+</Layout>
